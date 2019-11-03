@@ -1,0 +1,89 @@
+﻿id,Company,Product,TypeName,Inches,ScreenResolution,Cpu,Ram,Memory,Gpu,OpSys,Weight,Price_euros,Class
+1,Apple,Aspire 3,Ultrabook,15.6,IPS Panel Retina Display 2560x1600,AMD A9-Series 9420 3GHz,4GB,500GB HDD,AMD Radeon R5,macOS,2.1kg,400,PhoThong
+2,Apple,MacBook Pro,Ultrabook,15.4,1440x900,Intel Core i7 2.2GHz,16GB,256GB Flash Storage,Intel Iris Pro Graphics,macOS,2.04kg,2139.97,ChuyenNghiep
+3,HP,Macbook Air,Notebook,13.3,Full HD 1920x1080,Intel Core i5 1.8GHz,8GB,256GB Flash Storage,Intel HD Graphics 6000,No OS,1.34kg,1158.7,VanPhong
+4,Apple,ZenBook UX430UN,Ultrabook,14,IPS Panel Retina Display 2880x1800,Intel Core i7 8550U 1.8GHz,16GB,512GB SSD,Nvidia GeForce MX150,macOS,1.3kg,1495,VanPhong
+5,Apple,Swift 3,Ultrabook,14,IPS Panel Retina Display 2560x1600,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Intel UHD Graphics 620,macOS,1.6kg,770,VanPhong
+6,Acer,250 G6,Notebook,15.6,1366x768,Intel Core i5 7200U 2.5GHz,4GB,500GB HDD,Intel HD Graphics 620,Windows 10,1.86kg,393.9,PhoThong
+7,Apple,250 G6,Ultrabook,15.6,IPS Panel Retina Display 2880x1800,Intel Core i3 6006U 2GHz,4GB,500GB HDD,Intel HD Graphics 520,Mac OS X,1.86kg,344.99,PhoThong
+8,Apple,MacBook Pro,Ultrabook,15.4,1440x900,Intel Core i7 2.8GHz,16GB,256GB SSD,AMD Radeon Pro 555,macOS,1.83kg,2439.97,ChuyenNghiep
+9,Asus,Inspiron 3567,Ultrabook,15.6,Full HD 1920x1080,Intel Core i3 6006U 2GHz,4GB,256GB SSD,AMD Radeon R5 M430,Windows 10,2.2kg,498.9,PhoThong
+10,Acer,"MacBook 12""",Ultrabook,12,IPS Panel Full HD 1920x1080,Intel Core M m3 1.2GHz,8GB,256GB SSD,Intel HD Graphics 615,Windows 10,0.92kg,1262.4,VanPhong
+11,HP,MacBook Pro,Notebook,13.3,1366x768,Intel Core i5 2.3GHz,8GB,256GB SSD,Intel Iris Plus Graphics 640,No OS,1.37kg,1518.55,ChuyenNghiep
+12,HP,Inspiron 3567,Notebook,15.6,Full HD 1920x1080,Intel Core i7 7500U 2.7GHz,8GB,256GB SSD,AMD Radeon R5 M430,No OS,2.2kg,745,PhoThong
+13,Apple,MacBook Pro,Ultrabook,15.4,IPS Panel Retina Display 2880x1800,Intel Core i7 2.9GHz,16GB,512GB SSD,AMD Radeon Pro 560,macOS,1.83kg,2858,ChuyenNghiep
+14,Dell,IdeaPad 320-15IKB,Notebook,15.6,Full HD 1920x1080,Intel Core i3 7100U 2.4GHz,8GB,1TB HDD,Nvidia GeForce 940MX,Windows 10,2.2kg,499,PhoThong
+15,Apple,XPS 13,Ultrabook,13.3,IPS Panel Retina Display 2304x1440,Intel Core i5 8250U 1.6GHz,8GB,128GB SSD,Intel UHD Graphics 620,macOS,1.22kg,979,VanPhong
+16,Apple,Vivobook E200HA,Ultrabook,11.6,IPS Panel Retina Display 2560x1600,Intel Atom x5-Z8350 1.44GHz,2GB,32GB Flash Storage,Intel HD Graphics 400,macOS,0.98kg,191.9,PhoThong
+17,Dell,Legion Y520-15IKBN,Notebook,15.6,Full HD 1920x1080,Intel Core i5 7300HQ 2.5GHz,8GB,128GB SSD +  1TB HDD,Nvidia GeForce GTX 1050,Windows 10,2.5kg,999,ChuyenNghiep
+18,Apple,255 G6,Ultrabook,15.6,IPS Panel Retina Display 2880x1800,AMD E-Series E2-9000e 1.5GHz,4GB,500GB HDD,AMD Radeon R2,macOS,1.86kg,258,PhoThong
+19,Lenovo,Inspiron 5379,Notebook,13.3,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Intel UHD Graphics 620,No OS,1.62kg,819,VanPhong
+20,Dell,15-BS101nv (i7-8550U/8GB/256GB/FHD/W10),Ultrabook,15.6,IPS Panel Full HD / Touchscreen 1920x1080,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,Intel HD Graphics 620,Windows 10,1.91kg,659,VanPhong
+21,Asus,Inspiron 3567,Netbook,15.6,1366x768,Intel Core i3 6006U 2GHz,4GB,1TB HDD,Intel HD Graphics 520,Windows 10,2.3kg,418.64,PhoThong
+22,Lenovo,MacBook Air,Gaming,13.3,IPS Panel Full HD 1920x1080,Intel Core i5 1.6GHz,8GB,128GB Flash Storage,Intel HD Graphics 6000,Windows 10,1.35kg,1099,VanPhong
+23,HP,Inspiron 5570,Notebook,15.6,1366x768,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,AMD Radeon 530,No OS,2.2kg,800,PhoThong
+24,Dell,Latitude 5590,2 in 1 Convertible,15.6,Full HD / Touchscreen 1920x1080,Intel Core i7 8650U 1.9GHz,8GB,256GB SSD +  256GB SSD,Intel UHD Graphics 620,Windows 10,1.88kg,1298,VanPhong
+25,HP,ProBook 470,Ultrabook,17.3,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,1TB HDD,Nvidia GeForce 930MX,Windows 10,2.5kg,896,PhoThong
+26,Dell,"LapBook 15.6""",Notebook,15.6,1366x768,Intel Atom x5-Z8300 1.44GHz,4GB,64GB Flash Storage,Intel HD Graphics,Windows 10,1.89kg,244.99,PhoThong
+27,Apple,E402WA-GA010T (E2-6110/2GB/32GB/W10),Ultrabook,14,1440x900,AMD E-Series E2-6110 1.5GHz,2GB,32GB Flash Storage,AMD Radeon R2,Mac OS X,1.65kg,199,PhoThong
+28,Dell,17-ak001nv (A6-9220/4GB/500GB/Radeon,Notebook,17.3,Full HD 1920x1080,AMD A6-Series 9220 2.5GHz,4GB,500GB HDD,AMD Radeon 530,Windows 10,2.71kg,439,PhoThong
+29,Dell,XPS 13,Ultrabook,13.3,Full HD 1920x1080,Intel Core i7 8550U 1.8GHz,16GB,512GB SSD,Intel UHD Graphics 620,Windows 10,1.2kg,1869,VanPhong
+30,HP,MacBook Air,Notebook,13.3,Full HD 1920x1080,Intel Core i5 1.6GHz,8GB,256GB Flash Storage,Intel HD Graphics 6000,Windows 10,1.35kg,998,VanPhong
+31,Chuwi,IdeaPad 120S-14IAP,Notebook,14,Full HD 1920x1080,Intel Celeron Dual Core N3350 1.1GHz,4GB,64GB Flash Storage,Intel HD Graphics 500,Windows 10,1.44kg,249,PhoThong
+32,Asus,Aspire 3,Notebook,15.6,1366x768,Intel Core i3 7130U 2.7GHz,4GB,1TB HDD,Intel HD Graphics 620,Windows 10,2.1kg,367,PhoThong
+33,HP,Inspiron 5770,Notebook,17.3,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,128GB SSD +  1TB HDD,AMD Radeon 530,Windows 10,2.8kg,979,PhoThong
+34,Dell,250 G6,Ultrabook,15.6,Touchscreen / Quad HD+ 3200x1800,Intel Core i5 7200U 2.5GHz,4GB,1TB HDD,Intel HD Graphics 620,Windows 10,1.86kg,488.69,PhoThong
+35,Apple,ProBook 450,Ultrabook,15.6,1440x900,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Nvidia GeForce 930MX ,Mac OS X,2.1kg,879,PhoThong
+36,Lenovo,X540UA-DM186 (i3-6006U/4GB/1TB/FHD/Linux),Notebook,15.6,1366x768,Intel Core i3 6006U 2GHz,4GB,1TB HDD,Intel HD Graphics 620,Windows 10,2kg,389,PhoThong
+37,Acer,Inspiron 7577,Notebook,15.6,1366x768,Intel Core i7 7700HQ 2.8GHz,16GB,256GB SSD +  1TB HDD,Nvidia GeForce GTX 1060,Linux,2.65kg,1499,ChuyenNghiep
+38,Dell,X542UQ-GO005 (i5-7200U/8GB/1TB/GeForce,Notebook,15.6,IPS Panel Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,8GB,1TB HDD,Nvidia GeForce 940MX,Windows 10,2.3kg,522.99,PhoThong
+39,HP,Aspire A515-51G,Notebook,15.6,1366x768,Intel Core i5 8250U 1.6GHz,4GB,256GB SSD,Intel UHD Graphics 620,Windows 10,2.2kg,682,PhoThong
+40,HP,Inspiron 7773,Notebook,17.3,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,12GB,1TB HDD,Nvidia GeForce 150MX,Windows 10,2.77kg,999,VanPhong
+41,Asus,MacBook Pro,Notebook,13.3,Full HD 1920x1080,Intel Core i5 2.0GHz,8GB,256GB SSD,Intel Iris Graphics 540,Linux,1.37kg,1419,ChuyenNghiep
+42,Dell,IdeaPad 320-15ISK,Gaming,15.6,IPS Panel Full HD 1920x1080,Intel Core i3 6006U 2GHz,4GB,128GB SSD,Intel HD Graphics 520,Windows 10,2.2kg,369,PhoThong
+43,Asus,Rog Strix,Notebook,17.3,1366x768,AMD Ryzen 1700 3GHz,8GB,256GB SSD +  1TB HDD,AMD Radeon RX 580,Linux,3.2kg,1299,ChuyenNghiep
+44,Acer,Inspiron 3567,Notebook,15.6,IPS Panel Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,4GB,256GB SSD,AMD Radeon R5 M430,Windows 10,2.3kg,639,PhoThong
+45,Dell,X751NV-TY001T (N4200/4GB/1TB/GeForce,2 in 1 Convertible,17.3,Full HD / Touchscreen 1920x1080,Intel Pentium Quad Core N4200 1.1GHz,4GB,1TB HDD,Nvidia GeForce 920MX,Windows 10,2.8kg,466,PhoThong
+46,Apple,Yoga Book,Ultrabook,10.1,IPS Panel Retina Display 2560x1600,Intel Atom x5-Z8550 1.44GHz,4GB,64GB Flash Storage,Intel HD Graphics 400,macOS,0.69kg,319,VanPhong
+47,Lenovo,Aspire A515-51G,Notebook,15.6,1366x768,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,Nvidia GeForce MX150,No OS,2.2kg,841,PhoThong
+48,Asus,255 G6,Gaming,15.6,Full HD 1920x1080,AMD A6-Series 9220 2.5GHz,4GB,256GB SSD,AMD Radeon R4 Graphics,Windows 10,1.86kg,398.49,PhoThong
+49,Dell,ProBook 430,Notebook,13.3,Full HD 1920x1080,Intel Core i7 8550U 1.8GHz,8GB,512GB SSD,Intel UHD Graphics 620,Windows 10,1.49kg,1103,PhoThong
+50,Asus,Aspire 3,Notebook,15.6,1366x768,Intel Core i3 7100U 2.4GHz,4GB,1TB HDD,Intel HD Graphics 620,Windows 10,2.4kg,384,PhoThong
+51,Lenovo,Inspiron 3576,2 in 1 Convertible,15.6,IPS Panel Touchscreen 1920x1200,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,AMD Radeon 520,Android,2.13kg,767.8,PhoThong
+52,Acer,15-bs002nv (i3-6006U/4GB/128GB/FHD/W10),Notebook,15.6,IPS Panel Full HD 1920x1080,Intel Core i3 6006U 2GHz,4GB,128GB SSD,Intel HD Graphics 520,Windows 10,1.91kg,439,PhoThong
+53,HP,VivoBook Max,Notebook,15.6,Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,4GB,256GB SSD,Intel HD Graphics 620,Windows 10,2kg,586.19,PhoThong
+54,HP,GS73VR 7RG,Notebook,17.3,Full HD 1920x1080,Intel Core i7 7700HQ 2.8GHz,16GB,256GB SSD +  2TB HDD,Nvidia GeForce GTX 1070,Windows 10,2.43kg,2449,ChuyenNghiep
+55,Acer,X541UA-DM1897 (i3-6006U/4GB/256GB/FHD/Linux),Notebook,15.6,1366x768,Intel Core i3 6006U 2GHz,4GB,256GB SSD,Intel HD Graphics 520,Windows 10,2kg,415,PhoThong
+56,Dell,Inspiron 5770,Notebook,17.3,Full HD 1920x1080,Intel Core i7 8550U 1.8GHz,16GB,256GB SSD +  2TB HDD,AMD Radeon 530,Windows 10,2.8kg,1299,PhoThong
+57,HP,Vostro 5471,Notebook,14,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Intel UHD Graphics 620,Windows 10,1.7kg,879,VanPhong
+58,Asus,IdeaPad 520S-14IKB,Notebook,14,1366x768,Intel Core i3 7130U 2.7GHz,8GB,256GB SSD,Intel HD Graphics 620,Windows 10,1.7kg,599,PhoThong
+59,MSI,UX410UA-GV350T (i5-8250U/8GB/256GB/FHD/W10),Gaming,14,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Intel UHD Graphics 620,Windows 10,1.4kg,941,PhoThong
+60,Asus,250 G6,Notebook,15.6,Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,8GB,256GB SSD,Intel HD Graphics 620,Linux,1.86kg,690,PhoThong
+61,Dell,ZenBook Pro,Notebook,15.6,Full HD 1920x1080,Intel Core i7 7700HQ 2.8GHz,16GB,512GB SSD,Nvidia GeForce GTX 1050 Ti,Windows 10,1.8kg,1983,VanPhong
+62,Dell,250 G6,Ultrabook,15.6,Full HD 1920x1080,Intel Core i3 6006U 2GHz,4GB,500GB HDD,AMD Radeon 520,Windows 10,1.86kg,438.69,PhoThong
+63,Lenovo,Stream 14-AX040wm,Notebook,14,IPS Panel Full HD 1920x1080,Intel Celeron Dual Core N3060 1.6GHz,4GB,32GB SSD,Intel HD Graphics 400,No OS,1.44kg,229,PhoThong
+64,Asus,V310-15ISK (i5-7200U/4GB/1TB/FHD/W10),Notebook,15.6,Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,4GB,1TB HDD,Intel HD Graphics 620,Windows 10,1.9kg,549,PhoThong
+66,HP,FX753VE-GC093 (i7-7700HQ/12GB/1TB/GeForce,Notebook,17.3,Full HD 1920x1080,Intel Core i7 7700HQ 2.8GHz,12GB,1TB HDD,Nvidia GeForce GTX 1050 Ti,Windows 10,3kg,949,ChuyenNghiep
+67,Asus,Surface Laptop,Ultrabook,13.5,Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,4GB,128GB SSD,Intel HD Graphics 620,Windows 10,1.252kg,1089,VanPhong
+68,HP,Inspiron 5370,Notebook,13.3,1366x768,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,AMD Radeon 530,Windows 10,1.4kg,955,VanPhong
+69,HP,Inspiron 5570,Notebook,15.6,1366x768,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,AMD Radeon 530,Windows 10,2.2kg,870,PhoThong
+70,Lenovo,GL72M 7RDX,Notebook,17.3,Full HD 1920x1080,Intel Core i5 7300HQ 2.5GHz,8GB,128GB SSD +  1TB HDD,Nvidia GeForce GTX 1050,Windows 10,2.7kg,1095,ChuyenNghiep
+71,Asus,Aspire E5-475,Gaming,14,Full HD 1920x1080,Intel Core i3 6006U 2GHz,8GB,1TB HDD,Intel HD Graphics 520,Linux,2.1kg,389,PhoThong
+72,Microsoft,FX503VD-E4022T (i7-7700HQ/8GB/1TB/GeForce,Ultrabook,15.6,Touchscreen 2256x1504,Intel Core i7 7700HQ 2.8GHz,8GB,1TB HDD,Nvidia GeForce GTX 1050,Windows 10 S,2.2kg,949,ChuyenNghiep
+73,Dell,IdeaPad 320-15IKBN,Ultrabook,15.6,IPS Panel Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,8GB,2TB HDD,Intel HD Graphics 620,Windows 10,2.2kg,519,PhoThong
+74,Dell,Inspiron 5570,Notebook,15.6,Full HD 1920x1080,Intel Core i7 8550U 1.8GHz,8GB,128GB SSD +  1TB HDD,Intel UHD Graphics 620,Windows 10,2.02kg,855,PhoThong
+75,MSI,Aspire A515-51G-32MX,Gaming,15.6,Full HD 1920x1080,Intel Core i3 7130U 2.7GHz,4GB,1TB HDD,Nvidia GeForce MX130,Windows 10,2.2kg,530,PhoThong
+76,Acer,ProBook 470,Notebook,17.3,1366x768,Intel Core i5 8250U 1.6GHz,8GB,128GB SSD +  1TB HDD,Nvidia GeForce 930MX,Windows 10,2.5kg,977,PhoThong
+77,Asus,Latitude 5590,Gaming,15.6,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Intel UHD Graphics 620,Windows 10,1.88kg,1096.16,VanPhong
+78,Lenovo,"MacBook 12""",Notebook,12,Full HD 1920x1080,Intel Core i5 1.3GHz,8GB,512GB SSD,Intel HD Graphics 615,No OS,0.92kg,1510,VanPhong
+79,Dell,ProBook 440,Notebook,14,Full HD 1920x1080,Intel Core i5 8250U 1.6GHz,8GB,256GB SSD,Intel HD Graphics 620,Windows 10,1.63kg,860,PhoThong
+80,Acer,IdeaPad 320-15AST,Notebook,15.6,Full HD 1920x1080,AMD A6-Series 9220 2.5GHz,4GB,128GB SSD,AMD R4 Graphics,Windows 10,2.2kg,399,PhoThong
+81,HP,Aspire 3,Notebook,15.6,Full HD 1920x1080,AMD A9-Series 9420 3GHz,4GB,1TB HDD,AMD Radeon R5,Windows 10,2.1kg,395,PhoThong
+82,Dell,Inspiron 7577,Ultrabook,15.6,IPS Panel Full HD 1920x1080,Intel Core i7 7700HQ 2.8GHz,16GB,128GB SSD +  1TB HDD,Nvidia GeForce GTX 1050 Ti,Windows 10,2.65kg,1349,ChuyenNghiep
+83,Apple,Pavilion 15-CK000nv,Ultrabook,15.6,IPS Panel Retina Display 2304x1440,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,Nvidia GeForce GTX 940MX,macOS,1.83kg,699,VanPhong
+84,HP,250 G6,Notebook,15.6,Full HD 1920x1080,Intel Core i5 7200U 2.5GHz,8GB,256GB SSD,Intel HD Graphics 620,Windows 10,1.96kg,598.99,PhoThong
+85,Lenovo,FX503VM-E4007T (i7-7700HQ/16GB/1TB,Notebook,15.6,Full HD 1920x1080,Intel Core i7 7700HQ 2.8GHz,16GB,128GB SSD +  1TB HDD,Nvidia GeForce GTX 1060,Windows 10,2.2kg,1449,ChuyenNghiep
+86,Acer,XPS 13,Notebook,13.3,1366x768,Intel Core i7 8550U 1.8GHz,8GB,256GB SSD,Intel UHD Graphics 620,Windows 10,1.21kg,1649,VanPhong
+87,Dell,FX550IK-DM018T (FX-9830P/8GB/1TB/Radeon,Gaming,15.6,IPS Panel Full HD 1920x1080,AMD FX 9830P 3GHz,8GB,1TB HDD,AMD Radeon RX 560,Windows 10,2.45kg,699,ChuyenNghiep
+88,HP,Aspire 5,Ultrabook,15.6,IPS Panel Full HD 1920x1080,Intel Core i7 8550U 1.8GHz,8GB,1TB HDD,Nvidia GeForce MX150,Windows 10,2.2kg,689,PhoThong
+89,HP,Probook 430,Notebook,13.3,Full HD 1920x1080,Intel Core i7 8550U 1.8GHz,16GB,512GB SSD,Intel UHD Graphics 620,Windows 10,1.49kg,1197,PhoThong
