@@ -5,14 +5,12 @@
  */
 package Main;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Model.LaptopInfo;
+import Model.Setting;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -24,15 +22,15 @@ import javax.swing.SpinnerNumberModel;
 public class AddRow extends javax.swing.JFrame {
 
     public int type;
-    double laptopid;
-
+    String laptopid;
+    Main main;
     /**
      * Creates new form AddRow
      */
-    public AddRow(int type, double laptopid) {
+    public AddRow(int type, String laptopid, Main main) {
 
         initComponents();
-
+        this.main=main;
         SpinnerNumberModel model;
         JSpinner.NumberEditor editor;
         model = new SpinnerNumberModel(0.0, -1000.0, 1000.0, 0.1);
@@ -44,78 +42,66 @@ public class AddRow extends javax.swing.JFrame {
         JSpinner.NumberEditor editor1 = new JSpinner.NumberEditor(spnTrongLuong);
         spnTrongLuong.setEditor(editor1);
 
-        DAO.loaibonho.forEach((k, v) -> {
-            cbxOCung.addItem(k.toString());
-        });
+        Iterator it = DAO.loaibonho.keySet().iterator();
+        while (it.hasNext()) {
+            cbxOCung.addItem(it.next().toString());
+
+        }
+
         this.type = type;
-        this.laptopid=laptopid;
+        this.laptopid = laptopid;
         init();
 
     }
 
     void init() {
-        //view
         if (type == 1) {
-            try {
-                lCpu.setVisible(false);
-                txbCpu.hide();
-                lGpu.setVisible(false);
-                txbGpu.hide();
+            lCpu.setVisible(false);
+            txbCpu.hide();
+            lGpu.setVisible(false);
+            txbGpu.hide();
 
-                txbName.disable();
-                cbxOCung.disable();
-                spnDungLuong.setEnabled(false);
-                spnGia.setEnabled(false);
-                spnManHinh.setEnabled(false);
-                spnRam.setEnabled(false);
-                spnTrongLuong.setEnabled(false);
-                btnClearGpu.setEnabled(false);
-                ResultSet rs = DAO.getLaptopInfo(laptopid);
-
-                txbName.setText(rs.getString("name").toString());
-                cbxOCung.addItem(rs.getString("loaibonho").toString());
-                spnDungLuong.setValue(rs.getDouble("dungluong"));
-                spnGia.setValue(rs.getDouble("gia"));
-                spnManHinh.setValue(rs.getDouble("inches"));
-                spnRam.setValue(rs.getInt("ram"));
-                spnTrongLuong.setValue(rs.getDouble("trongluong"));
-                txbCpuVal.setText(rs.getString("cpu").toString());
-                txbGpuVal.setText(rs.getString("Gpu").toString());
-                int ch = rs.getInt("cuahang");
-                if (ch != 0) {
-                    cbxCuaHang.setSelected(true);
-                }
-                cbxCuaHang.setEnabled(false);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AddRow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AddRow.class.getName()).log(Level.SEVERE, null, ex);
+            txbName.disable();
+            cbxOCung.disable();
+            spnDungLuong.setEnabled(false);
+            spnGia.setEnabled(false);
+            spnManHinh.setEnabled(false);
+            spnRam.setEnabled(false);
+            spnTrongLuong.setEnabled(false);
+            LaptopInfo laptopInfo = Setting.GetLaptopInfo();
+            String[] in = (String[]) laptopInfo.getData().get( laptopid);
+            if (in == null) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin laptop trong kho dữ liệu ! " + Setting.GetSettingData().getFileProduct());
+                return;
             }
+            txbName.setText(in[(int) laptopInfo.getHeader().get("name")]);
+            cbxOCung.setSelectedItem(in[(int) laptopInfo.getHeader().get("loaibonho")]);
+            spnDungLuong.setValue(Integer.valueOf(in[(int) laptopInfo.getHeader().get("dungluongbonho")]));
+            spnGia.setValue(Double.valueOf(in[(int) laptopInfo.getHeader().get("gia")]));
+            spnManHinh.setValue(Double.valueOf(in[(int) laptopInfo.getHeader().get("manhinh")]));
+            spnRam.setValue(Integer.valueOf(in[(int) laptopInfo.getHeader().get("ram")]));
+            spnTrongLuong.setValue(Double.valueOf(in[(int) laptopInfo.getHeader().get("trongluong")]));
+            txbCpuVal.setText(in[(int) laptopInfo.getHeader().get("cpu")]);
+            txbGpuVal.setText(in[(int) laptopInfo.getHeader().get("gpu")]);
+
         }
         //edit
         if (type == 2) {
-            try {
-                ResultSet rs = DAO.getLaptopInfo(laptopid);
-
-                txbName.setText(rs.getString("name").toString());
-                cbxOCung.addItem(rs.getString("loaibonho").toString());
-                spnDungLuong.setValue(rs.getDouble("dungluong"));
-                spnGia.setValue(rs.getDouble("gia"));
-                spnManHinh.setValue(rs.getDouble("inches"));
-                spnRam.setValue(rs.getInt("ram"));
-                spnTrongLuong.setValue(rs.getDouble("trongluong"));
-                txbCpuVal.setText(rs.getString("cpu").toString());
-                txbGpuVal.setText(rs.getString("Gpu").toString());
-                int ch = rs.getInt("cuahang");
-                if (ch != 0) {
-                    cbxCuaHang.setSelected(true);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AddRow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AddRow.class.getName()).log(Level.SEVERE, null, ex);
+            LaptopInfo laptopInfo = Setting.GetLaptopInfo();
+            String[] in = (String[]) laptopInfo.getData().get(laptopid);
+            if (in == null) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin laptop trong kho dữ liệu ! " + Setting.GetSettingData().getFileProduct());
+                return;
             }
+            txbName.setText(in[(int) laptopInfo.getHeader().get("name")]);
+            cbxOCung.setSelectedItem(in[(int) laptopInfo.getHeader().get("loaibonho")]);
+            spnDungLuong.setValue(Integer.valueOf(in[(int) laptopInfo.getHeader().get("dungluongbonho")]));
+            spnGia.setValue(Double.valueOf(in[(int) laptopInfo.getHeader().get("gia")]));
+            spnManHinh.setValue(Double.valueOf(in[(int) laptopInfo.getHeader().get("manhinh")]));
+            spnRam.setValue(Integer.valueOf(in[(int) laptopInfo.getHeader().get("ram")]));
+            spnTrongLuong.setValue(Double.valueOf(in[(int) laptopInfo.getHeader().get("trongluong")]));
+            txbCpuVal.setText(in[(int) laptopInfo.getHeader().get("cpu")]);
+            txbGpuVal.setText(in[(int) laptopInfo.getHeader().get("gpu")]);
 
         }
     }
@@ -154,8 +140,6 @@ public class AddRow extends javax.swing.JFrame {
         btnOk = new javax.swing.JButton();
         txbCpuVal = new javax.swing.JTextField();
         txbGpuVal = new javax.swing.JTextField();
-        btnClearGpu = new javax.swing.JButton();
-        cbxCuaHang = new javax.swing.JCheckBox();
         btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -180,9 +164,9 @@ public class AddRow extends javax.swing.JFrame {
         });
 
         lCpu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lCpu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lCpuMouseClicked(evt);
+        lCpu.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lCpuValueChanged(evt);
             }
         });
         jScrollPane3.setViewportView(lCpu);
@@ -200,9 +184,9 @@ public class AddRow extends javax.swing.JFrame {
         });
 
         lGpu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lGpu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lGpuMouseClicked(evt);
+        lGpu.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lGpuValueChanged(evt);
             }
         });
         jScrollPane1.setViewportView(lGpu);
@@ -221,15 +205,6 @@ public class AddRow extends javax.swing.JFrame {
 
         txbGpuVal.setEditable(false);
         txbGpuVal.setBackground(new java.awt.Color(0, 204, 204));
-
-        btnClearGpu.setText("X");
-        btnClearGpu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearGpuActionPerformed(evt);
-            }
-        });
-
-        cbxCuaHang.setText("Đang có ở cửa hàng");
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -259,8 +234,7 @@ public class AddRow extends javax.swing.JFrame {
                                 .addComponent(txbCpuVal)
                                 .addComponent(txbCpu)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-                            .addComponent(jLabel11)
-                            .addComponent(cbxCuaHang))
+                            .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -272,16 +246,13 @@ public class AddRow extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                                     .addComponent(txbGpu)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txbGpuVal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnClearGpu))
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(spnRam)
                                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(spnGia)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(spnTrongLuong, javax.swing.GroupLayout.Alignment.LEADING))))))
+                                    .addComponent(spnTrongLuong, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txbGpuVal, javax.swing.GroupLayout.Alignment.LEADING))))))
                 .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -329,21 +300,17 @@ public class AddRow extends javax.swing.JFrame {
                                 .addComponent(spnRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel3)
-                                .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txbGpuVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnClearGpu))
+                                .addGap(2, 2, 2)
+                                .addComponent(txbGpuVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txbGpu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnOk)
-                                .addComponent(btnReset))
-                            .addComponent(cbxCuaHang))
-                        .addContainerGap(19, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnOk)
+                            .addComponent(btnReset))
+                        .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -359,20 +326,13 @@ public class AddRow extends javax.swing.JFrame {
         Iterator it = DAO.hm_cpu.entrySet().iterator();
         while (it.hasNext() && i < 5) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getKey().toString().indexOf(txbCpu.getText()) > -1) {
+            if (pair.getKey().toString().indexOf(txbCpu.getText().toLowerCase().trim()) > -1) {
                 l1.add(pair.getKey().toString());
                 i++;
             }
-//                it.remove(); // avoids a ConcurrentModificationException
         }
         lCpu.setListData(l1.toArray(new String[l1.size()]));
     }//GEN-LAST:event_txbCpuKeyReleased
-
-    private void lCpuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lCpuMouseClicked
-        if (!"".equals(lCpu.getSelectedValue())) {
-            txbCpuVal.setText(lCpu.getSelectedValue());
-        }
-    }//GEN-LAST:event_lCpuMouseClicked
 
     private void txbGpuKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txbGpuKeyReleased
         ArrayList<String> l1 = new ArrayList<>();
@@ -380,7 +340,7 @@ public class AddRow extends javax.swing.JFrame {
         Iterator it = DAO.hm_gpu.entrySet().iterator();
         while (it.hasNext() && i < 5) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getKey().toString().indexOf(txbGpu.getText()) > -1) {
+            if (pair.getKey().toString().indexOf(txbGpu.getText().toLowerCase().trim()) > -1) {
                 l1.add(pair.getKey().toString());
                 i++;
             }
@@ -388,12 +348,6 @@ public class AddRow extends javax.swing.JFrame {
         }
         lGpu.setListData(l1.toArray(new String[l1.size()]));
     }//GEN-LAST:event_txbGpuKeyReleased
-
-    private void lGpuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lGpuMouseClicked
-        if (!"".equals(lGpu.getSelectedValue())) {
-            txbGpuVal.setText(lGpu.getSelectedValue());
-        }
-    }//GEN-LAST:event_lGpuMouseClicked
 
     private boolean validateForm() {
         if (txbName.getText().trim().length() < 3) {
@@ -428,6 +382,10 @@ public class AddRow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hay chon mot loai cpu!");
             return false;
         }
+        if (txbGpuVal.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(this, "Hay chon mot loaigpu!");
+            return false;
+        }
         return true;
     }
 
@@ -438,7 +396,7 @@ public class AddRow extends javax.swing.JFrame {
         if (validateForm()) {
             HashMap row = new HashMap();
             row.put("name", txbName.getText());
-            row.put("inch", spnManHinh.getValue());
+            row.put("manhinh", spnManHinh.getValue());
             row.put("cpu", txbCpuVal.getText().toLowerCase().trim());
             row.put("ram", spnRam.getValue());
             row.put("loaibonho", cbxOCung.getSelectedItem().toString().toLowerCase().trim());
@@ -446,40 +404,43 @@ public class AddRow extends javax.swing.JFrame {
             row.put("gpu", txbGpuVal.getText().toLowerCase().trim());
             row.put("trongluong", spnTrongLuong.getValue());
             row.put("gia", spnGia.getValue());
-            row.put("laptopid", laptopid);
-            if (cbxCuaHang.isSelected()) {
-                row.put("inStore", 1);
-            } else {
-                row.put("inStore", 0);
-            }
+            row.put("id", laptopid);
             try {
                 if (type == 2) {
-                    DAO.updateRow(row);
+                    DAO.updateRowToDataProduct(row);
                     JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công!");
+                    main.init();
+                    main.save=true;
                     this.dispose();
                 } else if (type == 0) {
-                    DAO.insertNewRow(row);
+                    DAO.insertNewRowToDataProduct(row);
                     JOptionPane.showMessageDialog(this, "Thêm dữ liệu thành công!");
+                    main.init();
+                    main.save=true;
                 }
-//                this.dispose();
-
-            } catch (ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(this, "Lỗi!");
-                Logger.getLogger(AddRow.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Lỗi!");
-                Logger.getLogger(AddRow.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Lỗi");
+                System.out.println(this.getClass().getName() + "---" + ex.getMessage());
+                Setting.GetSettingData().writeLog(this.getClass().getName() + "---" + ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnOkActionPerformed
 
-    private void btnClearGpuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearGpuActionPerformed
-        txbGpuVal.setText("");
-    }//GEN-LAST:event_btnClearGpuActionPerformed
-
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         init();
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void lCpuValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lCpuValueChanged
+        if (!"".equals(lCpu.getSelectedValue())) {
+            txbCpuVal.setText(lCpu.getSelectedValue());
+        }
+    }//GEN-LAST:event_lCpuValueChanged
+
+    private void lGpuValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lGpuValueChanged
+        if (!"".equals(lGpu.getSelectedValue())) {
+            txbGpuVal.setText(lGpu.getSelectedValue());
+        }
+    }//GEN-LAST:event_lGpuValueChanged
 
     /**
      * @param args the command line arguments
@@ -518,10 +479,8 @@ public class AddRow extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClearGpu;
     private javax.swing.JButton btnOk;
     private javax.swing.JButton btnReset;
-    private javax.swing.JCheckBox cbxCuaHang;
     private javax.swing.JComboBox<String> cbxOCung;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

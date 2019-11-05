@@ -6,14 +6,17 @@
 package Main;
 
 import Model.KMeansModel;
-import Model.MySQLConnUtils;
-import java.sql.SQLException;
+import Model.Setting;
+import java.io.File;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -29,31 +32,23 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    public boolean save = false;
+
     public Main() {
         initComponents();
         init();
     }
 
-    void init() {
-        Instances data = KMeansModel.data_t;
+    public void init() {
+        HashMap dataLaptopInStore = Setting.GetLaptopInStoreVector().getData();
         DefaultTableModel tbModel1 = (DefaultTableModel) tbIP.getModel();
         tbModel1.setRowCount(0);
-        int ipL = data.size();
-        for (int i = 0; i < ipL; i++) {
-            tbModel1.addRow(new Object[]{
-                data.get(i).value(data.attribute("manhinh")),
-                data.get(i).value(data.attribute("ram")),
-                data.get(i).value(data.attribute("cpu")),
-                data.get(i).value(data.attribute("gpu")),
-                data.get(i).value(data.attribute("trongluong")),
-                data.get(i).value(data.attribute("loaibonho")),
-                data.get(i).value(data.attribute("dungluongbonho")),
-                data.get(i).value(data.attribute("gia")),
-                data.get(i).stringValue(data.attribute("laptop")),
-                data.get(i).stringValue(data.attribute("class")),
-                data.get(i).value(data.attribute("laptopid"))
-            });
+        for (Object value : dataLaptopInStore.values()) {
+            String[] vector = (String[]) value;
+            tbModel1.addRow(vector);
         }
+        lbFileTest.setText(Setting.GetSettingData().getFileDataLaptopInStore());
+        lbFileTraining.setText(Setting.GetSettingData().getFileData());
     }
 
     /**
@@ -83,8 +78,14 @@ public class Main extends javax.swing.JFrame {
         btnStatus = new javax.swing.JButton();
         btnDataSource = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
-        btnFormatData = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        btnChangeDataTest = new javax.swing.JButton();
+        btnChangeDataTraining = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lbFileTest = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbFileTraining = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -107,11 +108,11 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ManHinh", "Ram", "Cpu", "Gpu", "TrongLuong", "LoaiOCung", "DungLuong", "Gia", "Class", "Ten", ""
+                "ManHinh", "Ram", "Cpu", "Gpu", "TrongLuong", "LoaiBoNho", "DungLuong", "Gia", "Ten", "Id"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -137,11 +138,11 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ManHinh", "Ram", "Cpu", "Gpu", "TrongLuong", "LoaiOCung", "DungLuong", "Gia", "Ten", "Class", "Id"
+                "ManHinh", "Ram", "Cpu", "Gpu", "TrongLuong", "LoaiOCung", "DungLuong", "Gia", "Ten", "Id"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -199,19 +200,32 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnFormatData.setText("Format data");
-        btnFormatData.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Filter:");
+
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormatDataActionPerformed(evt);
+                btnSaveActionPerformed(evt);
             }
         });
 
-        jButton1.setText("ChangeDB");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnChangeDataTest.setText("ChangeDataTest");
+        btnChangeDataTest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnChangeDataTestActionPerformed(evt);
             }
         });
+
+        btnChangeDataTraining.setText("ChangeDataTraining");
+        btnChangeDataTraining.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeDataTrainingActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("File data test:");
+
+        jLabel3.setText("File data training:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,7 +233,7 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tbResult, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
+                    .addComponent(tbResult)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -232,12 +246,20 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnOk))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFormatData)
+                        .addComponent(txbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                        .addComponent(btnChangeDataTest)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnChangeDataTraining)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnView)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -245,47 +267,63 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnStatus)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnF5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdd)
                         .addGap(4, 4, 4)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbFileTest)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbFileTraining)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnF5)
-                    .addComponent(btnAdd)
-                    .addComponent(btnView)
-                    .addComponent(btnEdit)
-                    .addComponent(btnStatus)
-                    .addComponent(btnDataSource)
-                    .addComponent(btnDel)
-                    .addComponent(btnFormatData)
-                    .addComponent(jButton1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnF5)
+                        .addComponent(btnAdd)
+                        .addComponent(btnEdit)
+                        .addComponent(btnStatus)
+                        .addComponent(btnDataSource)
+                        .addComponent(btnView)
+                        .addComponent(jLabel1)
+                        .addComponent(btnSave)
+                        .addComponent(btnChangeDataTest)
+                        .addComponent(btnChangeDataTraining)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
+                        .addGap(5, 5, 5)
                         .addComponent(btnOk))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbClass)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9)
                                 .addComponent(jLabel10)
                                 .addComponent(lbTotal)))))
-                .addGap(10, 10, 10)
-                .addComponent(tbResult, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbResult, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lbFileTest)
+                    .addComponent(jLabel3)
+                    .addComponent(lbFileTraining))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -293,11 +331,21 @@ public class Main extends javax.swing.JFrame {
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         try {
+            Instances data = KMeansModel.data_p;
+            Instance ins = KMeansModel.data_p.lastInstance();
+            HashMap dataLaptopInStore = Setting.GetLaptopInStoreVector().getData();
+            HashMap h = Setting.GetLaptopInStoreVector().getHeader();
+            String laptopId = tbIP.getValueAt(tbIP.getSelectedRow(), 9).toString();
+            String[] laptopVector = (String[]) dataLaptopInStore.get("" + laptopId);
 
-            Instances data_t = KMeansModel.data_t;
-            Instances data_t_p = KMeansModel.data_t_p;
-
-            Instance ins = data_t_p.get(tbIP.getSelectedRow());
+            ins.setValue(data.attribute("manhinh"), Double.valueOf(laptopVector[(int) h.get("manhinh")]));
+            ins.setValue(data.attribute("ram"), Double.valueOf(laptopVector[(int) h.get("ram")]));
+            ins.setValue(data.attribute("cpu"), Double.valueOf(laptopVector[(int) h.get("cpu")]));
+            ins.setValue(data.attribute("gpu"), Double.valueOf(laptopVector[(int) h.get("gpu")]));
+            ins.setValue(data.attribute("trongluong"), Double.valueOf(laptopVector[(int) h.get("trongluong")]));
+            ins.setValue(data.attribute("loaibonho"), Double.valueOf(laptopVector[(int) h.get("loaibonho")]));
+            ins.setValue(data.attribute("dungluongbonho"), Double.valueOf(laptopVector[(int) h.get("dungluongbonho")]));
+            ins.setValue(data.attribute("gia"), Double.valueOf(laptopVector[(int) h.get("gia")]));
 
             int clus = KMeansModel.model.clusterInstance(ins);
             DefaultTableModel tbModel = (DefaultTableModel) tbRS.getModel();
@@ -306,42 +354,45 @@ public class Main extends javax.swing.JFrame {
             lbClass.setText(KMeansModel.classes[clus]);
 
             int c = 0;
-            for (int i = 0; i < data_t_p.size(); i++) {
-                if ((int) KMeansModel.model.clusterInstance(data_t_p.get(i)) == clus) {
+            for (Object value : dataLaptopInStore.values()) {
+                String[] vector = (String[]) value;
+
+                ins.setValue(data.attribute("manhinh"), Double.valueOf(vector[(int) h.get("manhinh")]));
+                ins.setValue(data.attribute("ram"), Double.valueOf(vector[(int) h.get("ram")]));
+                ins.setValue(data.attribute("cpu"), Double.valueOf(vector[(int) h.get("cpu")]));
+                ins.setValue(data.attribute("gpu"), Double.valueOf(vector[(int) h.get("gpu")]));
+                ins.setValue(data.attribute("trongluong"), Double.valueOf(vector[(int) h.get("trongluong")]));
+                ins.setValue(data.attribute("loaibonho"), Double.valueOf(vector[(int) h.get("loaibonho")]));
+                ins.setValue(data.attribute("dungluongbonho"), Double.valueOf(vector[(int) h.get("dungluongbonho")]));
+                ins.setValue(data.attribute("gia"), Double.valueOf(vector[(int) h.get("gia")]));
+
+                if ((int) KMeansModel.model.clusterInstance(ins) == clus) {
                     c++;
-                    tbModel.addRow(new Object[]{
-                        data_t.get(i).value(data_t.attribute("manhinh")),
-                        data_t.get(i).value(data_t.attribute("ram")),
-                        data_t.get(i).value(data_t.attribute("cpu")),
-                        data_t.get(i).value(data_t.attribute("gpu")),
-                        data_t.get(i).value(data_t.attribute("trongluong")),
-                        data_t.get(i).value(data_t.attribute("loaibonho")),
-                        data_t.get(i).value(data_t.attribute("dungluongbonho")),
-                        data_t.get(i).value(data_t.attribute("gia")),
-                        lbClass.getText(),
-                        data_t.get(i).stringValue(data_t.attribute("laptop")),
-                        data_t.get(i).value(data_t.attribute("laptopid"))
-                    });
+                    tbModel.addRow(vector);
                 }
 
             }
             lbTotal.setText("" + c);
+            JOptionPane.showMessageDialog(this, "Class: " + lbClass.getText() + "\nTotal: " + c);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Lỗi! " + ex.getMessage());
         }
 
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        (new AddRow(0, 0)).show();
+        (new AddRow(0, "", this)).show();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
+        if (save) {
+            btnSaveActionPerformed(null);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void btnF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnF5ActionPerformed
-        KMeansModel.build();
+//        KMeansModel.build();
         init();
 //        btnOkActionPerformed(null);
     }//GEN-LAST:event_btnF5ActionPerformed
@@ -368,70 +419,101 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStatusActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        String id = null;
+        String id = "";
         if (tbIP.getSelectedRow() >= 0) {
-            id = tbIP.getValueAt(tbIP.getSelectedRow(), 10).toString();
-            (new AddRow(1, Double.valueOf(id))).show();
+            id = tbIP.getValueAt(tbIP.getSelectedRow(), 9).toString();
+            (new AddRow(1, id, this)).show();
+        }else{
+            JOptionPane.showMessageDialog(this, "Không có hàng nào được chọn!");
         }
-//        else if(tbRS.getSelectedRow()>=0){
-//            id=tbRS.getModel().getValueAt(tbIP.getSelectedRow(), 10).toString();
-//        }
-
-
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        String id = null;
+        String id = "";
         if (tbIP.getSelectedRow() >= 0) {
-            id = tbIP.getValueAt(tbIP.getSelectedRow(), 10).toString();
-            (new AddRow(2, Double.valueOf(id))).show();
+            id = tbIP.getValueAt(tbIP.getSelectedRow(), 9).toString();
+            (new AddRow(2, id, this)).show();
+        }else{
+            JOptionPane.showMessageDialog(this, "Không có hàng nào được chọn!");
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDataSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataSourceActionPerformed
-        (new DataS()).show();
+        (new DataS(this)).show();
     }//GEN-LAST:event_btnDataSourceActionPerformed
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
-        double id = -1;
+        String id = "";
         if (tbIP.getSelectedRow() >= 0) {
-            id = Double.valueOf(String.valueOf(tbIP.getModel().getValueAt(tbIP.getSelectedRow(), 10)));
+            id = String.valueOf(tbIP.getModel().getValueAt(tbIP.getSelectedRow(), 9));
             int input = JOptionPane.showOptionDialog(null, "Dữ liệu đã xóa không thể phục hồi!", "Remove", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
-
             if (input == JOptionPane.OK_OPTION) {
-                try {
-                    DAO.removeRow(id);
-                    JOptionPane.showMessageDialog(this, "Thành công!");
-                } catch (SQLException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, "Lỗi!");
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                     JOptionPane.showMessageDialog(this, "Lỗi!");
-                }
+                DAO.removeRowFromDataProduct(id);
+                JOptionPane.showMessageDialog(this, "Thành công!");
+                this.init();
+                save = true;
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Không có hàng nào được chọn!");
         }
 
     }//GEN-LAST:event_btnDelActionPerformed
 
-    private void btnFormatDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormatDataActionPerformed
-        try {
-            KMeansModel.formatData();
-            KMeansModel.build();
-            this.init();
-            JOptionPane.showMessageDialog(this, "Thành công!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi!");
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi!");
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if (!save) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu thay đổi!");
+            return;
         }
-    }//GEN-LAST:event_btnFormatDataActionPerformed
+        int input = JOptionPane.showOptionDialog(null, "Bạn có muốn lưu thay đổi vào file data?", "Save", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+        if (input == JOptionPane.OK_OPTION) {
+            if (saveToFile()) {
+                JOptionPane.showMessageDialog(this, "Đã lưu!");
+                save = false;
+            } else {
+                JOptionPane.showMessageDialog(this, "Xãy ra lỗi trong quá trình lưu file, xem file log để biết thêm chi tiết!");
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        (new ChangeDBConnection()).show();       // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnChangeDataTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDataTestActionPerformed
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        int returnValue = jfc.showOpenDialog(null);
+        // int returnValue = jfc.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Setting.GetSettingData().setFileDataLaptopInStore(selectedFile.getAbsolutePath());
+            Setting.setLaptopInStoreVector(null);
+            init();
+            save = true;
+            JOptionPane.showMessageDialog(this, "File data laptop in store has change to " + selectedFile.getAbsolutePath());
+
+        }
+    }//GEN-LAST:event_btnChangeDataTestActionPerformed
+
+    private void btnChangeDataTrainingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDataTrainingActionPerformed
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        int returnValue = jfc.showOpenDialog(null);
+        // int returnValue = jfc.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Setting.GetSettingData().setFileData(selectedFile.getAbsolutePath());
+            KMeansModel.build();
+            save = true;
+            JOptionPane.showMessageDialog(this, "File data laptop training has change to " + selectedFile.getAbsolutePath());
+
+        }
+    }//GEN-LAST:event_btnChangeDataTrainingActionPerformed
+
+    private boolean saveToFile() {
+
+        return Setting.GetLaptopInfo().saveToCsv(Setting.GetSettingData().getFileProduct())
+                && Setting.GetLaptopInStoreVector().saveToCsv(Setting.GetSettingData().getFileDataLaptopInStore())
+                && Setting.WriteData();
+    }
 
     /**
      * @param args the command line arguments
@@ -470,20 +552,26 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnChangeDataTest;
+    private javax.swing.JButton btnChangeDataTraining;
     private javax.swing.JButton btnDataSource;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnF5;
-    private javax.swing.JButton btnFormatData;
     private javax.swing.JButton btnOk;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnStatus;
     private javax.swing.JButton btnView;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lbClass;
+    private javax.swing.JLabel lbFileTest;
+    private javax.swing.JLabel lbFileTraining;
     private javax.swing.JLabel lbTotal;
     private javax.swing.JTable tbIP;
     private javax.swing.JTable tbRS;

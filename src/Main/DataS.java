@@ -5,11 +5,12 @@
  */
 package Main;
 import Model.KMeansModel;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Model.Setting;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -19,13 +20,14 @@ import weka.core.Instances;
  * @author dttr2
  */
 public class DataS extends javax.swing.JFrame {
-
+    public Main main;
     /**
      * Creates new form DataS
      */
-    public DataS() {
+    public DataS(Main main) {
         initComponents();
         init();
+        this.main=main;
     }
 
      void init() {
@@ -43,11 +45,12 @@ public class DataS extends javax.swing.JFrame {
                 data.get(i).value(data.attribute("loaibonho")),
                 data.get(i).value(data.attribute("dungluongbonho")),
                 data.get(i).value(data.attribute("gia")),
-                data.get(i).stringValue(data.attribute("laptop")),
+                data.get(i).stringValue(data.attribute("name")),
                 data.get(i).stringValue(data.attribute("class")),
-                data.get(i).value(data.attribute("laptopid"))
+                data.get(i).value(data.attribute("id"))
             });
         }
+        lbTotal.setText(data.size()+"");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,11 +64,11 @@ public class DataS extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbIP = new javax.swing.JTable();
         txbSearch = new javax.swing.JTextField();
-        btnEdit = new javax.swing.JButton();
-        btnView = new javax.swing.JButton();
+        btnChangeDataSource = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         btnF5 = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
-        btnDel = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lbTotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -74,11 +77,11 @@ public class DataS extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ManHinh", "Ram", "Cpu", "Gpu", "TrongLuong", "LoaiOCung", "DungLuong", "Gia", "Ten", "Class", ""
+                "ManHinh", "Ram", "Cpu", "Gpu", "TrongLuong", "LoaiOCung", "DungLuong", "Gia", "Ten", "Class"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -93,19 +96,14 @@ public class DataS extends javax.swing.JFrame {
             }
         });
 
-        btnEdit.setText("Edit");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        btnChangeDataSource.setText("ChangeDataTraining");
+        btnChangeDataSource.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                btnChangeDataSourceActionPerformed(evt);
             }
         });
 
-        btnView.setText("View");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Filter:");
 
         btnF5.setText("Refresh");
         btnF5.addActionListener(new java.awt.event.ActionListener() {
@@ -114,56 +112,45 @@ public class DataS extends javax.swing.JFrame {
             }
         });
 
-        btnAdd.setText("Add");
-        btnAdd.setToolTipText("");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
-        btnDel.setText("Remove");
-        btnDel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Total:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnF5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnView)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAdd))
-                    .addComponent(jScrollPane1))
+                        .addComponent(btnChangeDataSource)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnChangeDataSource)
                     .addComponent(txbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
                     .addComponent(btnF5)
-                    .addComponent(btnAdd)
-                    .addComponent(btnView)
-                    .addComponent(btnEdit)
-                    .addComponent(btnDel))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(lbTotal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -180,94 +167,35 @@ public class DataS extends javax.swing.JFrame {
         tbIP.setRowSorter(sorter);
     }//GEN-LAST:event_txbSearchKeyReleased
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        String id=null;
-        if(tbIP.getSelectedRow()>=0){
-            id=tbIP.getValueAt(tbIP.getSelectedRow(), 10).toString();
-            (new AddRow(2,Double.valueOf(id))).show();
-        }
-    }//GEN-LAST:event_btnEditActionPerformed
+    private void btnChangeDataSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDataSourceActionPerformed
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        String id=null;
-        if(tbIP.getSelectedRow()>=0){
-            id=tbIP.getValueAt(tbIP.getSelectedRow(), 10).toString();
-            (new AddRow(1,Double.valueOf(id))).show();
+        int returnValue = jfc.showOpenDialog(null);
+        // int returnValue = jfc.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Setting.GetSettingData().setFileData(selectedFile.getAbsolutePath());
+            KMeansModel.build();
+            main.save = true;
+            init();
+            JOptionPane.showMessageDialog(this, "File data laptop training has change to " + selectedFile.getAbsolutePath());
+
         }
-    }//GEN-LAST:event_btnViewActionPerformed
+    }//GEN-LAST:event_btnChangeDataSourceActionPerformed
 
     private void btnF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnF5ActionPerformed
-        KMeansModel.build();
         init();
     }//GEN-LAST:event_btnF5ActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        (new AddRow(0,0)).show();
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
-        double id = -1;
-        if (tbIP.getSelectedRow() >= 0) {
-            id = (double) tbIP.getModel().getValueAt(tbIP.getSelectedRow(), 9);
-            int input = JOptionPane.showOptionDialog(null, "Dữ liệu đã xóa không thể phục hồi!", "Remove", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
-
-            if (input == JOptionPane.OK_OPTION) {
-                try {
-                    DAO.removeRow(id);
-                    JOptionPane.showMessageDialog(this, "Thành công!");
-                } catch (SQLException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, "Lỗi!");
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, "Lỗi!");
-                }
-            }
-        }
-    }//GEN-LAST:event_btnDelActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DataS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DataS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DataS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DataS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DataS().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDel;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnChangeDataSource;
     private javax.swing.JButton btnF5;
-    private javax.swing.JButton btnView;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbTotal;
     private javax.swing.JTable tbIP;
     private javax.swing.JTextField txbSearch;
     // End of variables declaration//GEN-END:variables

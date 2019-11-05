@@ -1,12 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,30 +15,29 @@ import java.util.Map;
  */
 public class SettingData {
 
-    private Map manHinh;
-    private Map ram;
-    private Map cpu;
-    private Map gpu;
-    private Map trongLuong;
     private String fileData;
-    private Integer k;
     private String fileProduct;
+    private String fileDataLaptopInStore;
+    private String fileValueMapping;
+    private String logFile;
+    public int maxIteration = 1000;
 
-    public String getFileProduct() {
-        return fileProduct;
-    }
-
-    public void setFileProduct(String fileProduct) {
-        this.fileProduct = fileProduct;
-    }
-    
-    public Integer getK() {
-        return k;
+    public int getMaxIteration() {
+        return maxIteration;
     }
 
-    public void setK(Integer k) {
-        this.k = k;
+    public void setMaxIteration(int maxIteration) {
+        this.maxIteration = maxIteration;
     }
+
+    public String getLogFile() {
+        return logFile;
+    }
+
+    public void setLogFile(String logFile) {
+        this.logFile = logFile;
+    }
+
     public String getFileData() {
         return fileData;
     }
@@ -46,82 +46,51 @@ public class SettingData {
         this.fileData = fileData;
     }
 
-    public Map getManHinh() {
-        return manHinh;
+    public String getFileProduct() {
+        return fileProduct;
     }
 
-    public void setManHinh(Map manHinh) {
-        this.manHinh = manHinh;
+    public void setFileProduct(String fileProduct) {
+        this.fileProduct = fileProduct;
     }
 
-    public Map getRam() {
-        return ram;
+    public String getFileDataLaptopInStore() {
+        return fileDataLaptopInStore;
     }
 
-    public void setRam(Map ram) {
-        this.ram = ram;
+    public void setFileDataLaptopInStore(String fileDataLaptopInStore) {
+        this.fileDataLaptopInStore = fileDataLaptopInStore;
     }
 
-    public Map getCpu() {
-        return cpu;
+    public String getFileValueMapping() {
+        return fileValueMapping;
     }
 
-    public void setCpu(Map cpu) {
-        this.cpu = cpu;
+    public void setFileValueMapping(String fileValueMapping) {
+        this.fileValueMapping = fileValueMapping;
     }
 
-    public Map getGpu() {
-        return gpu;
-    }
+    public void writeLog(String str) {
 
-    public void setGpu(Map gpu) {
-        this.gpu = gpu;
-    }
+        try {
+            FileWriter writer;
+            String time = (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).format(new Date());
+            File f = new File(logFile);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            writer = new FileWriter(f);
+            BufferedWriter bufferedWriter=new  BufferedWriter(writer);
+            bufferedWriter.newLine();
+            bufferedWriter.append(time + " : " + str);
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(SettingData.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-    public Map getTrongLuong() {
-        return trongLuong;
     }
-
-    public void setTrongLuong(Map trongLuong) {
-        this.trongLuong = trongLuong;
-    }
-
-    public Map getLoaiOCung() {
-        return loaiOCung;
-    }
-
-    public void setLoaiOCung(Map loaiOCung) {
-        this.loaiOCung = loaiOCung;
-    }
-
-    public Map getDungLuongOCung() {
-        return dungLuongOCung;
-    }
-
-    public void setDungLuongOCung(Map dungLuongOCung) {
-        this.dungLuongOCung = dungLuongOCung;
-    }
-
-    public Map getGia() {
-        return gia;
-    }
-
-    public void setGia(Map gia) {
-        this.gia = gia;
-    }
-    private Map loaiOCung;
-    private Map dungLuongOCung;
-    private Map gia;
 
     public SettingData() {
-        manHinh = new HashMap();
-        ram = new HashMap();
-        cpu = new HashMap();
-        gpu = new HashMap();
-        trongLuong = new HashMap();
-        loaiOCung = new HashMap();
-        dungLuongOCung = new HashMap();
-        gia = new HashMap();
-        
+
     }
 }
